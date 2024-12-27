@@ -1,39 +1,510 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="bank managment system" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/bank managment system" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/bank managment system" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-		</Build>
-		<Compiler>
-			<Add option="-Wall" />
-		</Compiler>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Extensions />
-	</Project>
-</CodeBlocks_project_file>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+
+
+//all functions
+void checkbalance(char*);
+void transfermoney(void);
+void display(char*);
+void person(char*);
+void login(void);
+void loginsu(void);
+void account(void);
+void accountcreated(void);
+void afterlogin(void);
+void logout(void);
+
+
+void gotoxy(int x, int y)
+{
+
+COORD c;
+c.X = x;
+c.Y = y;
+SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
+
+}
+
+//structure to store data
+struct pass{
+
+    char username[50];
+    int date, month, year;
+    char pnumber[15];
+    char adharnum[20];
+    char fname[20];
+    char lname[20];
+    char fathname[20];
+    char mothname[20];
+    char address[20];
+    char typeaccount[20];
+
+};
+
+//struct of keeping track
+struct money{
+char usernameto[50];
+char userpersonfrom[50];
+long int money1;
+};
+
+struct userpass {
+char password[50];
+};
+
+int  main()
+{
+
+    int i, a, b, choice;
+    int passwordlength;
+    gotoxy(20, 3);
+
+  printf("welcome to bank managment system\n\n");
+  gotoxy(18, 5);
+
+  printf("************************************");
+  gotoxy(25, 7);
+
+  printf("developer Ali Ahmed (og by naman kumar) but i am just learning here");
+
+  gotoxy(20, 10);
+  printf("1..... create a bank account");
+
+  gotoxy(20, 12);
+  printf("2.....already a user? sign in");
+  gotoxy(20, 14);
+  printf("3.....exit\n\n");
+
+  printf("\n\nenter your choice..");
+
+  scanf("%d", &choice);
+
+  switch (choice) {
+  case 1:
+      system("cls");
+      printf("\n\n username 50 characters max!");
+      printf("\n\n password 50 characters max!");
+      account();
+      break;
+
+      case 2:
+      login();
+      break;
+
+      case 3:
+        exit(0);
+        break;
+
+        getch();
+  }
+}
+
+void account(void)
+{
+
+    char password[20];
+    int passwordlength, i, seek = 0;
+    char ch;
+    FILE *fp, *fu;
+    struct pass u1;
+    struct userpass p1;
+
+    struct userpass u2;
+
+    fp = fopen("username.txt", "ab");
+
+    system("cls");
+    printf("\n\n create account");
+
+    printf("\n\nfirst name..");
+    scanf("%s", &u1.fname);
+
+    printf("\n\n last naem ..");
+    scanf("%s", &u1.lname);
+
+    printf("\n\n father's name..");
+    scanf("%s", &u1.fathname);
+
+    printf("\n\n mother's name...");
+    scanf("%s", &u1.mothname);
+
+    printf("\n\naddress..");
+    scanf("%s",&u1.address);
+
+    printf("\n\n account type");
+    scanf("%s", &u1.typeaccount);
+
+    printf("\n\ndate of birth..");
+    printf("\n date");
+    scanf("%d", &u1.date);
+    printf("\nmonth");
+    scanf("%d", &u1.month);
+    printf("\nyear");
+    scanf("%d", &u1.year);
+
+    printf("\n\nphone number");
+    scanf("%s", u1.pnumber);
+
+    printf("\n\nusername..");
+    scanf("%s", &u1.username);
+    printf("\n\npassword..");
+
+     for (i - 0; i < 50; i++) {
+        ch = getch();
+        if ( ch != 13) {
+            password[i] = ch;
+            ch = '*';
+            printf("%c", ch);
+        }
+        else
+            break;
+     }
+
+
+fwrite(&u1, sizeof(u1), 1, fp);
+accountcreated();
+}
+
+void accountcreated(void)
+{
+    int i;
+    char ch;
+    system("cls");
+    printf(" please wait...\n\n your data is processing...");
+    for (i = 0; i < 200000000; i++)
+        i++;
+    i--;
+
+
+gotoxy(10, 30);
+
+
+
+
+printf("account created successfuly....");
+gotoxy(0, 20);
+
+printf("press to login");
+
+getch();
+login();
+}
+
+//login function
+void login(void)
+{
+
+    system("cls");
+
+    char username[50];
+    char password[50];
+
+    int i, j, k;
+    char ch;
+    FILE *fp, *fu;
+    struct pass u1;
+    struct userpass u2;
+
+    fp = fopen("username.txt", "rb");
+
+    if (fp == NULL) {
+        printf("error opening your file");
+
+    }
+    gotoxy(34, 2);
+    printf("account login");
+    gotoxy(7, 5);
+    printf("***********************************");
+
+    gotoxy(35, 10);
+    printf("log in");
+
+    gotoxy(35, 12);
+    printf("useranme");
+    scanf("%s", &username);
+
+    gotoxy(35, 14);
+    printf("password");
+
+    //input the password
+    for(i = 0; i < 50; i++){
+
+    ch = getch();
+    if (ch != 13) {
+        password[i] = ch;
+        ch = '*';
+        printf("%c", ch);
+    }
+    else
+        break;
+    }
+    while (fread(&u1, sizeof(u1), 1, fp)){
+        if (strcmp(username, u1.username) ==0){
+            loginsu();
+            display(username);
+        }
+    }
+    fclose(fp);
+}
+
+//after successful login
+
+void loginsu(void)
+{
+
+    int i;
+    FILE* fp;
+    struct pass u1;
+    system("cls");
+    printf("geting account detailes \n");
+    for (i = 0; i < 20000; i++){
+        i++;
+        i--;
+
+    }
+    gotoxy(30, 10);
+    printf("login successful");
+    gotoxy(0, 20);
+    printf("press enter to continue");
+
+    getch();
+}
+
+void display(char username1[])
+{
+
+    system("cls");
+    FILE* fp;
+    int choice, i;
+    fp = fopen("username.txt, ", "rb");
+    struct pass u1;
+
+    if (fp == NULL) {
+
+        printf("error in opining file");
+
+    }
+    while (fread(&u1, sizeof(u1), 1, fp)) {
+        if (strcmp(username1, u1.username) == 0){
+            gotoxy(30, 1);
+            printf("hello, %s %s", u1.fname, u1.lname);
+            gotoxy(20, 2);
+            printf(".......................");
+            gotoxy(55, 6);
+            printf("=== your account info ===");
+            gotoxy(55, 8);
+            printf("===========================");
+            gotoxy(55, 10);
+            printf("name..%s %s", u1.fname,u1.lname);
+
+            gotoxy(55, 12);
+            printf("fathers name..%s %s", u1.fathname, u1.lname);
+
+            gotoxy(55, 14);
+            printf("mothers name.. %s", u1.mothname);
+
+            gotoxy(55, 18);
+            printf("mobile number %s", u1.pnumber);
+
+            gotoxy(55, 20);
+            printf("date of birth %d-%d-%d", u1.date, u1.month, u1.year);
+
+            gotoxy(55, 22);
+            printf("address %s ", u1.address);
+
+            gotoxy(55, 22);
+            printf("account type %s", u1.typeaccount);
+
+        }
+
+    }
+
+
+fclose(fp);
+
+gotoxy(0, 6);
+
+printf(" home");
+gotoxy(0, 7);
+printf("******");
+gotoxy(0, 9);
+printf("1.check balance");
+gotoxy(0, 11);
+printf("2.transfer money");
+gotoxy(0, 13);
+printf("3.log out\n\n");
+gotoxy(0, 15);
+printf("4. exit\n\n");
+
+printf("enter your choises");
+scanf("%d", &choice);
+
+switch (choice) {
+case 1:
+    checkbalance(username1);
+    break;
+
+    case 2:
+        transfermoney();
+        break;
+
+    case 3:
+        logout();
+        login();
+        break;
+
+    case 4:
+        exit(0);
+        break;
+
+}
+}
+
+
+void transfermoney(void)
+{
+
+    int i, j;
+    FILE *fm, *fp;
+    struct pass u1;
+    struct money m1;
+    char usernamet[20];
+    char usernamep[20];
+    system("cls");
+
+    fp = fopen("username.txt", "rb");
+
+    fm = fopen("mon.txt", "ab");
+
+    gotoxy(33, 4);
+    printf("transfer money");
+    gotoxy(33, 5);
+    printf("==============");
+
+    gotoxy(33, 11);
+    printf("from (your username..)");
+    scanf("%s", &usernamet);
+
+    gotoxy(33, 13);
+    printf("to (username of person)");
+    scanf("%s", &usernamep);
+
+while (fread(&u1, sizeof(u1), 1, fp))
+{
+    if (strcmp(usernamep, u1.username) == 0)
+        strcpy(m1.usernameto, u1.username);
+        strcpy(m1.userpersonfrom, usernamet);
+
+}
+
+
+gotoxy(33, 16);
+printf("enter the amount to transfare");
+scanf("%d", &m1.money1);
+fwrite(&m1, sizeof(m1), 1, fm);
+
+gotoxy(0, 26);
+printf("--------------------" "-------------------------");
+
+gotoxy(0, 28);
+printf("--------------------------" "-----------------------");
+
+gotoxy(0, 29);
+printf("transferring the money , please wait");
+
+gotoxy(10, 27);
+for (i = 0; i < 70; i++) {
+    for (j = 0; i < 1200000; j++) {
+        j++;
+        j--;
+    }
+    printf("*");
+}
+
+gotoxy(33, 40);
+printf("money successfully transfared");
+getch();
+
+fclose(fp);
+fclose(fm);
+
+display("username");
+}
+
+void checkbalance(char username2[])
+{
+    system("cls");
+    FILE* fm;
+    struct money m1;
+    char ch;
+    int i = 1, summoney = 0;
+
+    fm = fopen("mon.txt", "rb");
+
+    int k = 5, l = 10;
+    int m = 30, n = 10;
+    int u = 60, v = 10;
+
+    gotoxy(30, 2);
+    printf("==== balance info ====");
+    gotoxy(30, 3);
+    printf("************************");
+    gotoxy(k, l);
+    printf("s no.");
+    gotoxy(m, n);
+    printf("transaction id");
+    gotoxy(u, v);
+    printf("amount");
+
+    while (fread(&m1, sizeof(m1), 1, fm)) {
+        if (strcmp("username2", m1.usernameto) == 0) {
+            gotoxy(k, ++l);
+            printf("%d", i);
+            i++;
+            gotoxy(m, ++n);
+            printf("%s", m1.userpersonfrom);
+
+            gotoxy(u, ++v);
+            printf("%d", m1.money1);
+
+            summoney = summoney + m1.money1;
+        }
+    }
+    gotoxy(80, 10);
+    printf("total amount");
+
+    gotoxy(80, 12);
+    printf("%d", summoney);
+
+    getch();
+
+    fclose(fm);
+    display(username2);
+}
+
+void logout(void)
+{
+
+    int i, j;
+    system("cls");
+    printf("please wait, logging out");
+
+    for (i = 0; i < 10; i++){
+        for (j = 0; j < 25000000; j++) {
+            j++;
+            j--;
+        }
+        printf(".");
+
+    }
+    gotoxy(30, 10);
+    printf("sign out successfully..\n");
+
+    gotoxy(0, 20);
+    printf("press any key to continue");
+
+    getch();
+}
