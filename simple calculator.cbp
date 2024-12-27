@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <float.h>
+
+int main() {
+char op;
+double a, b, res;
+
+printf("enter operator (+, -, *, /): ");
+scanf("%c", &op);
+
+printf("enter two operands: ");
+scanf("%lf %lf", &a, &b);
+
+switch (op) {
+case '+':
+res = a + b;
+break;
+case '-':
+res = a - b;
+break;
+case '*':
+res = a * b;
+break;
+case '/':
+res = a / b;
+break;
+default :
+printf("error! incorrect operator");
+res = -DBL_MAX;
+}
+if(res!=-DBL_MAX)
+printf("%.2lf" , res);
+
+return 0;
+}
